@@ -1,0 +1,62 @@
+"""
+Packaging to go up onto PyPi
+- Brett Cannon
+
+Build Artifacts:
+ - wheels (whls)
+    - internally are just zipped files
+    - no build step
+    - *may* need to fix up some dependencies
+    - Convenient and modern
+    - Its really a 'prebuilt package of bits'
+
+ - source distributions (sdists)
+    - tar files; gzipped
+    - if you start with this -- it will be built and converted to a whl
+
+Introduction to Flit:
+
+
+    * Why Flit -- what is wrong with setuptools? *
+
+        side-effect of setuptools:
+        - setup.py file
+            - *PROBLEM* code will be executed when installing the file.
+        - setup.cfg file
+            - ?
+        - manifest.in
+            - ?
+
+        Three files just to get going.  Tough to get it correct.
+
+    * What's the official word: https://packaging.python.org/guides
+
+
+    1. Enure the __init__.py file has a version / doc string for description
+    2. create a flit.ini file
+        - http://flit.readthedocs.io/en/latest/flit_ini.html
+    3. create a sdist
+    4. create a wheel
+    5. flit publish ...
+
+    To Test and not go live:
+     - use test.pypi.org  (#using-test-pypi on packaging.python.org for more info)
+
+
+Asides:
+    - Always use -m when running pip: python -m pip install flit
+    - include a __version__ at the top of the file's __init__.py
+    - Brett recommended using a '.dev' instead of a beta number (not usre about that one.)
+    - pip can install both an end user library -- OR one that the dev would use.  In which case additional dev-request
+      dependencies.
+
+Problems Encountered:
+    - No way to use extras_require option
+
+
+The FUTURE:
+    - PEP518
+        - the idea is that the build step to get a whl could be specified and something other than setuptools can
+          be the author of the package.
+        - Seems there is a fragility problem with setup tools since things were breaking every time they would make a
+          seemingly innocuous change.
